@@ -21,7 +21,9 @@ from sklearn.metrics import classification_report
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
-
+from sklearn.linear_model import LogisticRegression
+from sklearn.decomposition import PCA
+import pickle
 # Returns formatted X_train, y_train, X_test so they sont have any null values or strings in X.
 def preprocessing(dataset):
 
@@ -76,7 +78,7 @@ if __name__ == '__main__':
     dataset = pd.read_csv(f_name) #Shape: 10000x35.
 
     y = dataset[dataset.columns[2]].values
-    X_train, y_train, X_test,y_test,float_dataset  = preprocessing(dataset)
+    X_train, Y_train, X_test,y_test,float_dataset  = preprocessing(dataset)
 
     ########-----------------------------KNN------------------------------------#######
 
@@ -88,7 +90,13 @@ if __name__ == '__main__':
     weights="distance"
 
     # Classification:
-    y_preds = classifierKNN(X_train, y_train,X_test,float_dataset, y,n_neigh,algo,p_dist,dist_metric,weights)
+    y_predsKNN = classifierKNN(X_train, Y_train,X_test,float_dataset, y,n_neigh,algo,p_dist,dist_metric,weights)
 
-    for i in y_preds: #2000 predictions.
-        print(i)
+    pca = PCA()
+    X_train = pca.fit_transform(X_train)
+    X_test = pca.fit(X_test)
+
+    lr = LogisticRegression()
+    lr.fit(X_train,Y_train)
+    LRscores = cross_val_score(lr, float_dataset, y, cv=10)
+    s = pickle.dump(lr,open("logistic-regression.model",'wb'))
