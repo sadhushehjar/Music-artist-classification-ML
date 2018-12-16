@@ -26,6 +26,7 @@ from sklearn.metrics import classification_report
 from sklearn.neighbors import KNeighborsClassifier
 from sklearn.model_selection import cross_val_score
 from sklearn.model_selection import train_test_split
+from sklearn.naive_bayes import GaussianNB
 
 # Returns formatted X_train, y_train, X_test so they sont have any null values or strings in X.
 def preprocessing(dataset):
@@ -95,7 +96,7 @@ def support_vector_machine(X_train, y_train,X_test,float_dataset):
                    'C': [1, 10, 100, 1000]},
                    {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
 
-    clf = svm.SVC(gamma='scale', decision_function_shape='ovo')
+    clf = svm.SVC(gamma='scale', decision_function_shape='ovo', verbose=1)
     clf.fit(X_train, y_train)
     predictions = clf.predict(X_test)
     print("predictions \n",predictions)
@@ -104,7 +105,7 @@ def support_vector_machine(X_train, y_train,X_test,float_dataset):
     print()
 
     clf = GridSearchCV(clf, parameters, cv=2,
-                       scoring='accuracy')
+                       scoring='accuracy',n_jobs=-1)
     clf.fit(X_train, y_train)
 
 
@@ -122,6 +123,14 @@ def support_vector_machine(X_train, y_train,X_test,float_dataset):
     print(clf.best_params_)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
+def naive_bayes(X_train,Y_train,X_Test,Y_Test):
+
+    clf = GaussianNB()
+    clf.fit(X_train,Y_train)
+    predictions = clf.predict(X_Test)
+    testPredictions = clf.predict(X_train)
+    print("Gaussian Prediction Accuracy on test data: ",accuracy_score(predictions,Y_Test))
+    print("Gaussian Prediction Accuracy on train data: ",accuracy_score(testPredictions,Y_Test))
 
 # return y_pred
 '''def svmClassifier(X_train, y_train,X_test,float_dataset):
@@ -146,8 +155,8 @@ if __name__ == '__main__':
     f_name = sys.argv[1]
     json_file = sys.argv[2]
     #....for json config files.....#
-    with open(json_file, 'r') as f:
-        df_json = json.load(f)
+    #with open(json_file, 'r') as f:
+        #df_json = json.load(f)
     #Contains only 10,000 instances. Original -> 1 Million!
     dataset = pd.read_csv(f_name) #Shape: 10000x35.
 
