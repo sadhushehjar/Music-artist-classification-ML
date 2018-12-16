@@ -130,7 +130,26 @@ def naive_bayes(X_train,Y_train,X_Test,Y_Test):
     predictions = clf.predict(X_Test)
     testPredictions = clf.predict(X_train)
     print("Gaussian Prediction Accuracy on test data: ",accuracy_score(predictions,Y_Test))
-    print("Gaussian Prediction Accuracy on train data: ",accuracy_score(testPredictions,Y_Test))
+    print("Gaussian Prediction Accuracy on train data: ",accuracy_score(testPredictions,Y_train))
+
+def logistic_regression(X_train,y_train):
+
+    parameters = {'C': [.001, .01, .1, 1, 10, 100]}
+
+    clf = GridSearchCV(LogisticRegression(), parameters, cv=2, n_jobs=-1)
+    clf.fit(X_train, y_train)
+
+    means = clf.cv_results_['mean_test_score']
+    stds = clf.cv_results_['std_test_score']
+
+    for mean, std, params in zip(means, stds, clf.cv_results_['params']):
+        print("mean cross-validation accuracy: ", mean, "for", params)
+        print()
+
+    print("Best Score: ", clf.best_score_)
+    print("Best parameters set found on development set:")
+    print()
+    print(clf.best_params_)
 
 # return y_pred
 '''def svmClassifier(X_train, y_train,X_test,float_dataset):
