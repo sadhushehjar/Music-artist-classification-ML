@@ -91,10 +91,9 @@ def classifierKNN(X_train, y_train,X_test,float_dataset, y,df_json):
 
 def support_vector_machine(X_train, y_train,X_test,float_dataset):
 
-    parameters = [{'kernel': ['rbf'],
-                   'gamma': [1e-4, 1e-3, 0.01, 0.1, 0.2, 0.5],
-                   'C': [1, 10, 100, 1000]},
-                   {'kernel': ['linear'], 'C': [1, 10, 100, 1000]}]
+    parameters = {'kernel': ['rbf'],
+                   'gamma': [0.01, 0.1, 0.2, 0.5],
+                   'C': [.1, 1, 10]},
 
     clf = svm.SVC(gamma='scale', decision_function_shape='ovo', verbose=1)
     clf.fit(X_train, y_train)
@@ -123,14 +122,10 @@ def support_vector_machine(X_train, y_train,X_test,float_dataset):
     print(clf.best_params_)
 #-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 
-def naive_bayes(X_train,Y_train,X_Test,Y_Test):
+def naive_bayes(X_train,Y_train):
 
     clf = GaussianNB()
-    clf.fit(X_train,Y_train)
-    predictions = clf.predict(X_Test)
-    testPredictions = clf.predict(X_train)
-    print("Gaussian Prediction Accuracy on test data: ",accuracy_score(predictions,Y_Test))
-    print("Gaussian Prediction Accuracy on train data: ",accuracy_score(testPredictions,Y_train))
+    print(cross_val_score(clf, X_train, Y_train, cv=2, n_jobs=-1))
 
 def logistic_regression(X_train,y_train):
 
@@ -210,7 +205,7 @@ if __name__ == '__main__':
 
     ########-----------------------------SVM-------------------------------------#######
     start_time = time.time()
-    support_vector_machine(X_train, y_train,X_test,float_dataset)
+    naive_bayes(X_train,y_train)
     print((time.time() - start_time)*0.0166667,"Min")
 
 
