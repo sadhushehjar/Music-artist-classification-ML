@@ -125,7 +125,7 @@ def support_vector_machine(X_train, y_train,X_test,float_dataset):
 def naive_bayes(X_train,Y_train):
 
     clf = GaussianNB()
-    print(cross_val_score(clf, X_train, Y_train, cv=2, n_jobs=-1))
+    print("Cross validated accuracy score:",np.mean(cross_val_score(clf, X_train, Y_train, cv=2, n_jobs=-1)))
 
 def logistic_regression(X_train,y_train):
 
