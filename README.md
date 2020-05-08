@@ -7,6 +7,6 @@ In this project we aim to classify srtist names using their songs as features. W
 5. Logistic regression (LR).
 
 
-## Dependency:
+## Dependencies:
  - sklearn https://scikit-learn.org/stable/
  
