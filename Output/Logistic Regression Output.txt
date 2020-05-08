@@ -1,0 +1,17 @@
+('mean cross-validation accuracy: ', 0.00925, 'for', {'C': 0.001})
+()
+('mean cross-validation accuracy: ', 0.0155, 'for', {'C': 0.01})
+()
+('mean cross-validation accuracy: ', 0.02175, 'for', {'C': 0.1})
+()
+('mean cross-validation accuracy: ', 0.027, 'for', {'C': 1})
+()
+('mean cross-validation accuracy: ', 0.030875, 'for', {'C': 10})
+()
+('mean cross-validation accuracy: ', 0.027625, 'for', {'C': 100})
+()
+('Best Score: ', 0.030875)
+Best parameters set found on development set:
+()
+{'C': 10}
+(25.930526996594548, 'Min')
