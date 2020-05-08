@@ -5,3 +5,8 @@ In this project we aim to classify srtist names using their songs as features. W
 3. Support vector machines (SVM).
 4. Naive bayes (NB).
 5. Logistic regression (LR).
+
+
+## Dependency:
+ - sklearn https://scikit-learn.org/stable/
+ 
